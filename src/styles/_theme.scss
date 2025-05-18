@@ -1,0 +1,80 @@
+@use '@angular/material' as mat;
+
+$geen-palette: (
+  50: #ecffe5,
+  100: #ceffbe,
+  200: #a9ff91,
+  300: #76ff58,
+  400: #33ff00,
+  500: #00fc00,
+  600: #00ea00,
+  700: #00d400,
+  800: #00bf00,
+  900: #009900,
+  contrast: (
+    50: rgba(0,0,0,0.87),
+    100: rgba(0,0,0,0.87),
+    200: rgba(0,0,0,0.87),
+    300: rgba(0,0,0,0.87),
+    400: rgba(0,0,0,0.87),
+    500: rgba(0,0,0,0.87),
+    600: white,
+    700: white,
+    800: white,
+    900: white
+  )
+);
+$green: map-get($geen-palette, 500);
+
+$purple-palette: (
+  50: #f9e4ff,
+  100: #eebcfe,
+  200: #e38cff,
+  300: #d755ff,
+  400: #cc00ff,
+  500: #c000fd,
+  600: #ac00f8,
+  700: #9000f3,
+  800: #7500f1,
+  900: #2e00e6,
+  contrast: (
+    50: rgba(0,0,0,0.87),
+    100: rgba(0,0,0,0.87),
+    200: rgba(0,0,0,0.87),
+    300: rgba(0,0,0,0.87),
+    400: rgba(0,0,0,0.87),
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white
+  )
+);
+
+$grey-palette: (
+  50: #f9f9f9,
+  100: #f3f3f3,
+  200: #eaeaea,
+  300: #dadada,
+  400: #b7b7b7,
+  500: #979797,
+  600: #6f6f6f,
+  700: #5b5b5b,
+  800: #3c3c3c,
+  900: #1c1c1c
+);
+
+@include mat.core();
+
+$my-primary: mat.m2-define-palette($geen-palette);
+$my-accent: mat.m2-define-palette($purple-palette);
+$my-theme: mat.m2-define-dark-theme((
+  color:(
+    primary:$my-primary,
+    accent:$my-accent
+  )
+));
+
+@include mat.core-theme($my-theme);
+@include mat.all-component-themes($my-theme);
+@include mat.button-theme($my-theme);

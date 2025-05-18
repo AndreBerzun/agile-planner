@@ -1,0 +1,42 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Sprints</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <button (click)="state.addSprint()" mat-raised-button color="primary">Add sprint</button>
+
+    <div cdkDropList (cdkDropListDropped)="onSprintDrop($event)">
+      @for (sprint of state.sprints(); track sprint.id) {
+        <mat-card class="lighter" cdkDrag>
+          <mat-card-header>
+            <mat-card-title class="d-flex align-items-center">
+              <mat-icon cdkDragHandle>drag_indicator</mat-icon>
+
+              <mat-form-field class="flex-grow-1">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="startPicker" [(ngModel)]="sprint.startDate">
+                <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+                <mat-datepicker #startPicker></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="flex-grow-1">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="endPicker" [(ngModel)]="sprint.endDate">
+                <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+                <mat-datepicker #endPicker></mat-datepicker>
+              </mat-form-field>
+
+              <button mat-icon-button (click)="state.removeSprint(sprint.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <textarea placeholder="Enter sprint details..." [(ngModel)]="sprint.rawInput"></textarea>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,33 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Product Backlog</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <button (click)="state.addBacklog()" mat-raised-button color="primary">Add backlog</button>
+
+    <div cdkDropList (cdkDropListDropped)="onBacklogDrop($event)">
+      @for (backlog of state.backlogs(); track backlog.id) {
+        <mat-card class="lighter" cdkDrag>
+          <mat-card-header>
+            <mat-card-title class="d-flex align-items-center">
+              <mat-icon cdkDragHandle>drag_indicator</mat-icon>
+
+              <mat-form-field class="flex-grow-1">
+                <input matInput placeholder="Backlog Name" [(ngModel)]="backlog.name">
+              </mat-form-field>
+
+              <button mat-icon-button (click)="state.removeBacklog(backlog.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content>
+            <textarea placeholder="Enter backlog item details..." [(ngModel)]="backlog.rawInput"></textarea>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  </mat-card-content>
+</mat-card>

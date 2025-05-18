@@ -1,5 +1,28 @@
 # AgilePlanner
+# Agile Planner
 
+A lightweight personal agile planning tool that calculates project completion projections based on historical velocity.
+
+## Features
+
+- Create simple one-liner stories with story points
+- Group stories into project backlogs
+- Create sprints with flexible durations
+- Assign stories to sprints and mark them as complete
+- Calculate median velocity weighted by sprint duration
+- Project completion dates for backlogs
+- LocalStorage persistence with JSON export/import functionality
+
+## Development Setup
+
+### Prerequisites
+
+- Node.js (v18 or later)
+- npm (v9 or later)
+
+### Installation
+
+1. Clone the repository:
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.10.
 
 ## Development server
