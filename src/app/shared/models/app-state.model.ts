@@ -14,6 +14,7 @@ export type Sprint = {
   startDate?: Date;
   endDate?: Date;
   rawInput?: string;
+  storyPoints?: number;
 }
 
 export type AppState = {

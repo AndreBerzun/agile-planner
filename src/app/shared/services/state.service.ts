@@ -46,7 +46,7 @@ export class StateService {
   }
 
   addSprint(): void {
-    this.state.sprints.push({
+    this.state.sprints.unshift({
       id: uuidv4(),
       startDate: new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 1)),
       endDate: new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 7))
