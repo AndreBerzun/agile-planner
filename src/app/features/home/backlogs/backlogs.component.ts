@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatButton, MatButtonModule } from "@angular/material/button";
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from "@angular/material/card";
 import { StateService } from '../../../shared/services/state.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
@@ -24,7 +24,8 @@ import { MatIconModule } from '@angular/material/icon';
     CdkDragHandle,
     CdkDrag,
     CdkDropList,
-    MatButtonModule
+    MatButtonModule,
+    ReactiveFormsModule
   ],
   templateUrl: './backlogs.component.html'
 })

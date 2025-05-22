@@ -1,66 +1,64 @@
-import { computed, effect, Injectable, signal } from '@angular/core';
-import { AppState } from '../models/app-state.model';
+import { Injectable } from '@angular/core';
+import { AppStateFormModel, appStateFromForm, createAppStateForm, initialState } from '../models/app-state.model';
 import { StorageService } from './storage.service';
 import { v4 as uuidv4 } from 'uuid';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
-
-const initialState: AppState = {
-  backlogs: [],
-  sprints: []
-}
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Backlog, createBacklogForm } from '../models/backlog.model';
+import { createSprintForm, Sprint } from '../models/sprint.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StateService {
-  private readonly state = initialState;
-  private appStateSignal = signal<AppState>(this.state);
-  readonly backlogs = computed(() => this.appStateSignal().backlogs);
-  readonly sprints = computed(() => this.appStateSignal().sprints);
+  readonly form: FormGroup<AppStateFormModel>;
 
-  constructor(private readonly storageService: StorageService) {
+  get backlogs(): Backlog[] {
+    return appStateFromForm(this.form).backlogs;
+  }
+
+  get sprints(): Sprint[] {
+    return appStateFromForm(this.form).sprints;
+  }
+
+  constructor(private readonly fb: FormBuilder, private readonly storageService: StorageService) {
     const savedState = this.storageService.loadState();
-    if (savedState) {
-      this.state = savedState;
-      this.appStateSignal.set(this.state);
-    }
-
-    effect(() => {
-      this.storageService.saveState(this.appStateSignal());
-    });
+    this.form = createAppStateForm(this.fb, savedState ?? initialState);
+    this.form.valueChanges
+      .pipe(takeUntilDestroyed())
+      .subscribe(_ => this.storageService.saveState(appStateFromForm(this.form)));
   }
 
   addBacklog(): void {
-    this.state.backlogs.unshift({id: uuidv4()});
-    this.appStateSignal.set({...this.state});
+    this.form.controls.backlogs.insert(0, createBacklogForm(this.fb, {id: uuidv4()}));
   }
 
   sortBacklogs(previousIndex: number, currentIndex: number): void {
-    moveItemInArray(this.state.backlogs, previousIndex, currentIndex);
-    this.appStateSignal.set({...this.state});
+    moveItemInArray(this.form.controls.backlogs.controls, previousIndex, currentIndex);
   }
 
   removeBacklog(id: string): void {
-    this.state.backlogs = this.state.backlogs.filter(backlog => backlog.id !== id);
-    this.appStateSignal.set({...this.state});
+    const backlogs = this.form.controls.backlogs;
+    const index = backlogs.controls.findIndex(backlog => backlog.value.id === id);
+    backlogs.removeAt(index);
   }
 
   addSprint(): void {
-    this.state.sprints.unshift({
+    this.form.controls.sprints.insert(0, createSprintForm(this.fb, {
       id: uuidv4(),
       startDate: new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 1)),
       endDate: new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 7))
-    });
-    this.appStateSignal.set({...this.state});
+    }));
   }
 
   sortSprints(previousIndex: number, currentIndex: number): void {
-    moveItemInArray(this.state.sprints, previousIndex, currentIndex);
-    this.appStateSignal.set({...this.state});
+    moveItemInArray(this.form.controls.sprints.controls, previousIndex, currentIndex);
   }
 
   removeSprint(id: string): void {
-    this.state.sprints = this.state.sprints.filter(sprint => sprint.id !== id);
-    this.appStateSignal.set({...this.state});
+    const sprints = this.form.controls.sprints;
+    const index = sprints.controls.findIndex(sprint => sprint.value.id === id);
+    sprints.removeAt(index);
   }
 }

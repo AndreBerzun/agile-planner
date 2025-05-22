@@ -1,8 +1,10 @@
-import { computed, Injectable, Signal } from '@angular/core';
+import { Injectable, Signal } from '@angular/core';
 import { StoryParserService } from './story-parser.service';
 import { StateService } from './state.service';
 import { differenceInDays } from 'date-fns';
-import { Sprint } from '../models/app-state.model';
+import { map } from 'rxjs';
+import { Sprint } from '../models/sprint.model';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +14,13 @@ export class AgileService {
   readonly medianVelocity: Signal<number>;
 
   constructor(private readonly state: StateService, private readonly storyParser: StoryParserService) {
-    this.medianVelocity = computed(this.calculateMedianVelocity.bind(this));
+    this.medianVelocity = toSignal(
+      this.state.form.valueChanges.pipe(map(() => this.calculateMedianVelocity(this.state.sprints))),
+      {initialValue: this.calculateMedianVelocity(this.state.sprints)}
+    );
   }
 
-  calculateMedianVelocity(): number {
-    const sprints = this.state.sprints();
+  calculateMedianVelocity(sprints: Sprint[]): number {
     if (sprints.length === 0) return 0;
 
     const normalizedStoryPointsSum = sprints
