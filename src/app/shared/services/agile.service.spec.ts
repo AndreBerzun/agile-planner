@@ -1,26 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { AgileService } from './agile.service';
-import { StateService } from './state.service';
 import { StoryParserService } from './story-parser.service';
 import { Sprint } from '../models/sprint.model';
 import { v4 as uuidv4 } from 'uuid';
-import { of } from 'rxjs';
 
 describe('AgileService', () => {
   let service: AgileService;
 
   beforeEach(() => {
-    const stateSpy = {
-      sprints: [],
-      form: {
-        valueChanges: of('')
-      }
-    } as unknown as StateService;
-
     TestBed.configureTestingModule({
       providers: [
         AgileService,
-        {provide: StateService, useValue: stateSpy},
         {provide: StoryParserService, useValue: new StoryParserService()}
       ]
     });
@@ -41,7 +31,7 @@ describe('AgileService', () => {
     const sprint: Sprint = {
       id: uuidv4(),
       startDate: new Date('2024-01-01'),
-      endDate: new Date('2024-01-14'),
+      endDate: new Date('2024-01-8'),
       rawInput: '[5] Story'
     };
     const result = service.calculateMedianVelocity([sprint]);
@@ -53,17 +43,59 @@ describe('AgileService', () => {
       {
         id: uuidv4(),
         startDate: new Date('2024-01-01'),
-        endDate: new Date('2024-01-15'),
+        endDate: new Date('2024-01-08'),
         rawInput: '[10] Story'
       },
       {
         id: uuidv4(),
-        startDate: new Date('2024-01-15'),
-        endDate: new Date('2024-01-29'),
+        startDate: new Date('2024-01-08'),
+        endDate: new Date('2024-01-15'),
         rawInput: '[20] Story'
       }
     ];
     const result = service.calculateMedianVelocity(sprints);
     expect(result).toBe(15);
+  });
+
+  it('should return -1 for project completion with empty sprints', () => {
+    const backlog = {id: uuidv4(), name: 'Test Backlog', rawInput: '[5] Story'};
+    const result = service.projectBacklogCompletion(backlog, []);
+    expect(result).toBe(-1);
+  });
+
+  it('should calculate project completion for single sprint', () => {
+    const sprint: Sprint = {
+      id: uuidv4(),
+      startDate: new Date('2024-01-01'),
+      endDate: new Date('2024-01-08'),
+      rawInput: '[5] Story'
+    };
+    const backlog = {id: uuidv4(), name: 'Test Backlog', rawInput: '[5] Story'};
+    const result = service.projectBacklogCompletion(backlog, [sprint]);
+    expect(result).toBe(7);
+  });
+
+  it('should calculate project completion for multiple sprints', () => {
+    const sprints: Sprint[] = [
+      {
+        id: uuidv4(),
+        startDate: new Date('2024-01-01'),
+        endDate: new Date('2024-01-08'),
+        rawInput: '[10] Story'
+      },
+      {
+        id: uuidv4(),
+        startDate: new Date('2024-01-08'),
+        endDate: new Date('2024-01-15'),
+        rawInput: '[20] Story'
+      }
+    ];
+    const backlog = {
+      id: uuidv4(),
+      name: 'Test Backlog',
+      rawInput: '[15] Story 1\n[30] Story 2'
+    };
+    const result = service.projectBacklogCompletion(backlog, sprints);
+    expect(result).toBe(21);
   });
 });

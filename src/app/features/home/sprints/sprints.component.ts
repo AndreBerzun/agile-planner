@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Signal } from '@angular/core';
 import { MatButton, MatButtonModule } from "@angular/material/button";
 import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from "@angular/material/card";
 import { StateService } from '../../../shared/services/state.service';
@@ -9,6 +9,8 @@ import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList } from '@angular/cdk/d
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AgileService } from '../../../shared/services/agile.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-sprints',
@@ -32,7 +34,13 @@ import { AgileService } from '../../../shared/services/agile.service';
   templateUrl: './sprints.component.html'
 })
 export class SprintsComponent {
+  readonly medianVelocity: Signal<number>;
+
   constructor(readonly state: StateService, readonly agile: AgileService) {
+    this.medianVelocity = toSignal(
+      this.state.form.valueChanges.pipe(map(() => agile.calculateMedianVelocity(this.state.sprints))),
+      {initialValue: agile.calculateMedianVelocity(this.state.sprints)}
+    );
   }
 
   onSprintDrop(event: CdkDragDrop<any[]>): void {

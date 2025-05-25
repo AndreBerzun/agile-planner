@@ -5,8 +5,9 @@ import { StateService } from '../../../shared/services/state.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { MatIconModule } from '@angular/material/icon';
+import { BacklogComponent } from './backlog/backlog.component';
 
 
 @Component({
@@ -21,11 +22,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    CdkDragHandle,
-    CdkDrag,
     CdkDropList,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BacklogComponent
   ],
   templateUrl: './backlogs.component.html'
 })

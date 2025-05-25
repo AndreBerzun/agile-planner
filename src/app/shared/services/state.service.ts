@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Backlog, createBacklogForm } from '../models/backlog.model';
 import { createSprintForm, Sprint } from '../models/sprint.model';
+import { defaultSprintLength } from './constants';
 
 @Injectable({
   providedIn: 'root'
@@ -48,7 +49,7 @@ export class StateService {
     this.form.controls.sprints.insert(0, createSprintForm(this.fb, {
       id: uuidv4(),
       startDate: new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 1)),
-      endDate: new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 7))
+      endDate: new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + defaultSprintLength))
     }));
   }
 
