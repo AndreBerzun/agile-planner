@@ -6,6 +6,7 @@ import { SprintsComponent } from './sprints/sprints.component';
 import { StateService } from '../../shared/services/state.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoryAtticComponent } from './story-attic/story-attic.component';
+import { CurrentSprintComponent } from './current-sprint/current-sprint.component';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ import { StoryAtticComponent } from './story-attic/story-attic.component';
     BacklogsComponent,
     SprintsComponent,
     ReactiveFormsModule,
-    StoryAtticComponent
+    StoryAtticComponent,
+    CurrentSprintComponent
   ],
   templateUrl: './home.component.html',
   standalone: true

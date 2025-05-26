@@ -6,7 +6,7 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Backlog, createBacklogForm } from '../models/backlog.model';
-import { createSprintForm, Sprint } from '../models/sprint.model';
+import { createSprintForm, Sprint, sprintFromForm } from '../models/sprint.model';
 import { defaultSprintLength } from './constants';
 
 @Injectable({
@@ -61,5 +61,14 @@ export class StateService {
     const sprints = this.form.controls.sprints;
     const index = sprints.controls.findIndex(sprint => sprint.value.id === id);
     sprints.removeAt(index);
+  }
+
+  finishCurrentSprint(): void {
+    const currentSprint = sprintFromForm(this.form.controls.currentSprint);
+    currentSprint.startDate = new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 1));
+    currentSprint.endDate = new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + defaultSprintLength));
+
+    this.form.controls.sprints.insert(0, createSprintForm(this.fb, currentSprint));
+    this.form.controls.currentSprint.reset({id: uuidv4()});
   }
 }
