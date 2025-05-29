@@ -9,18 +9,18 @@
       <form [formGroup]="sprint">
         <retro-card cdkDrag>
           <retro-card-header>
-            <button cdkDragHandle class="small">::</button>
+            <button cdkDragHandle class="retro small">::</button>
 
-            <retro-card-title class="date-input-wrapper">
-              <label for="startDate"></label>
-              <input id="startDate" type="date" placeholder="..." formControlName="startDate">
+            <retro-card-title>
+              <retro-datepicker [control]="sprint.controls.startDate!" placeholder="start_date"
+              ></retro-datepicker>
             </retro-card-title>
-            <retro-card-title class="date-input-wrapper">
-              <label for="endDate"></label>
-              <input id="endDate" type="date" placeholder="..." formControlName="endDate">
+            <retro-card-title>
+              <retro-datepicker [control]="sprint.controls.endDate!" placeholder="end_date"
+              ></retro-datepicker>
             </retro-card-title>
 
-            <button class="danger small" (click)="state.removeSprint(sprint.value.id!)">X</button>
+            <button class="retro danger small" (click)="state.removeSprint(sprint.value.id!)">X</button>
           </retro-card-header>
 
           <textarea placeholder="Enter sprint details..." formControlName="rawInput"></textarea>
@@ -29,5 +29,5 @@
     }
   </div>
 
-  <button class="big mb-5" (click)="state.addSprint()">Add_sprint</button>
+  <button class="retro big mb-5" (click)="state.addSprint()">Add_sprint</button>
 </div>

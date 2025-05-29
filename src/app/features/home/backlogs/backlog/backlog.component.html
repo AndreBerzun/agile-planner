@@ -1,11 +1,11 @@
 <form [formGroup]="backlog">
   <retro-card cdkDrag>
     <retro-card-header>
-      <button cdkDragHandle class="small">::</button>
+      <button cdkDragHandle class="retro small">::</button>
       <retro-card-title>
         BCK-LOG{{ backlog.value.id!.substring(0, 3) }} \\ ETA: {{ projectedCompletion | async }} days
       </retro-card-title>
-      <button class="danger small" (click)="remove.emit()">X</button>
+      <button class="retro danger small" (click)="remove.emit()">X</button>
     </retro-card-header>
 
     <textarea placeholder="Enter backlog item details..." formControlName="rawInput"></textarea>

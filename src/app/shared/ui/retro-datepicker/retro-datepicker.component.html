@@ -1,0 +1,12 @@
+<div class="d-flex retro-datepicker">
+  <input
+    class="flex-grow-1"
+    matInput
+    [matDatepicker]="datePicker"
+    [placeholder]="placeholder"
+    [formControl]="control"
+  >
+  <span>v</span>
+  <mat-datepicker #datePicker></mat-datepicker>
+  <div (click)="datePicker.open()" class="click-area"></div>
+</div>

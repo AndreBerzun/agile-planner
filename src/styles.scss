@@ -1,5 +1,6 @@
 @use 'bootstrap/scss/bootstrap-grid' as bootstrap-grid;
 @use 'styles/theme' as theme;
+@use 'styles/material' as material;
 
 section {
   margin: 0;
@@ -46,57 +47,14 @@ input {
   color: theme.$teal;
   background-color: transparent;
   font-weight: bold;
+  text-transform: uppercase;
 
   &:focus {
     outline: none;
   }
-
-  &[type="date"] {
-    pointer-events: none;
-    &::-webkit-calendar-picker-indicator {
-      display: none;
-    }
-  }
 }
 
-.date-input-wrapper {
-  position: relative;
-  cursor: pointer;
-
-  label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-  }
-
-  input[type="date"] {
-    position: relative;
-    color: transparent;
-
-    &::before {
-      content: attr(data-formatted-date);
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      display: flex;
-      align-items: center;
-      pointer-events: none;
-      color: theme.$teal;
-    }
-
-    /* Show placeholder when empty */
-    &:not([data-formatted-date])::before {
-      content: attr(placeholder);
-    }
-  }
-}
-
-button {
+button.retro {
   background-color: transparent;
   border: none;
   color: theme.$amber;

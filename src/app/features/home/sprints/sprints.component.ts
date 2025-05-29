@@ -6,7 +6,7 @@ import { AgileService } from '../../../shared/services/agile.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { RetroCardModule } from '../../../shared/ui/retro-card';
-import { DateFormatterDirective } from '../../../shared/ui/directives/date-formatter.directive';
+import { RetroDatepickerComponent } from '../../../shared/ui/retro-datepicker/retro-datepicker.component';
 
 @Component({
   selector: 'app-sprints',
@@ -17,7 +17,7 @@ import { DateFormatterDirective } from '../../../shared/ui/directives/date-forma
     CdkDropList,
     ReactiveFormsModule,
     RetroCardModule,
-    DateFormatterDirective
+    RetroDatepickerComponent
   ],
   templateUrl: './sprints.component.html'
 })
