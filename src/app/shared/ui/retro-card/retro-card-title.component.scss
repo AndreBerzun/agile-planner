@@ -1,0 +1,15 @@
+@use 'theme' as theme;
+
+:host {
+  flex-grow: 1;
+  margin: -8px 0;
+  padding: 8px 16px;
+
+  border-left: 1px solid rgba(theme.$teal, 0.5);
+  border-right: 1px solid rgba(theme.$teal, 0.5);
+
+  text-transform: uppercase;
+  text-align: left;
+  font-weight: bold;
+  font-size: 18px;
+}

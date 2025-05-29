@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
 import { BacklogsComponent } from './backlogs/backlogs.component';
 import { SprintsComponent } from './sprints/sprints.component';
 import { StateService } from '../../shared/services/state.service';
@@ -11,8 +9,6 @@ import { CurrentSprintComponent } from './current-sprint/current-sprint.componen
 @Component({
   selector: 'app-home',
   imports: [
-    MatCardModule,
-    MatButtonModule,
     BacklogsComponent,
     SprintsComponent,
     ReactiveFormsModule,

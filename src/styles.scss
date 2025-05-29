@@ -1,2 +1,157 @@
-@import 'styles/base';
-@import 'styles/material-overrides';
+@use 'bootstrap/scss/bootstrap-grid' as bootstrap-grid;
+@use 'styles/theme' as theme;
+
+section {
+  margin: 0;
+  padding: 0 0.75rem;
+  border: 1px solid rgba(theme.$amber, 0.5);
+}
+
+main {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h2 {
+  color: theme.$dark-teal;
+  text-transform: uppercase;
+  line-height: 1.8;
+
+  span {
+    background-color: theme.$teal;
+  }
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  overflow: hidden;
+  border: none;
+  resize: none;
+
+  color: theme.$teal;
+  background-color: transparent;
+  font-weight: bold;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+input {
+  width: 100%;
+  border: none;
+
+  color: theme.$teal;
+  background-color: transparent;
+  font-weight: bold;
+
+  &:focus {
+    outline: none;
+  }
+
+  &[type="date"] {
+    pointer-events: none;
+    &::-webkit-calendar-picker-indicator {
+      display: none;
+    }
+  }
+}
+
+.date-input-wrapper {
+  position: relative;
+  cursor: pointer;
+
+  label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  input[type="date"] {
+    position: relative;
+    color: transparent;
+
+    &::before {
+      content: attr(data-formatted-date);
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+      color: theme.$teal;
+    }
+
+    /* Show placeholder when empty */
+    &:not([data-formatted-date])::before {
+      content: attr(placeholder);
+    }
+  }
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  color: theme.$amber;
+  font-family: theme.$font;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 6px 16px;
+  text-transform: uppercase;
+  position: relative;
+  transition: all 0.2s ease;
+
+  &::before {
+    content: '[ ';
+    opacity: 0.7;
+  }
+
+  &::after {
+    content: ' ]';
+    opacity: 0.7;
+  }
+
+  &:hover, &:focus {
+    &::before, &::after {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    color: rgba(theme.$amber, 0.3);
+    cursor: not-allowed;
+  }
+
+  &[cdkDragHandle] {
+    cursor: grab;
+  }
+
+  &.danger {
+    color: theme.$red;
+  }
+
+  &.big {
+    font-size: 18px;
+  }
+
+  &.small {
+    &::before {
+      content: '[';
+    }
+
+    &::after {
+      content: ']';
+    }
+  }
+}

@@ -1,0 +1,9 @@
+@use 'theme' as theme;
+
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(theme.$teal, 0.5);
+}

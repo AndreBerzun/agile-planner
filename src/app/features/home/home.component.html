@@ -1,19 +1,19 @@
-<form [formGroup]="state.form" class="content-xl flex-column gap-2">
-  <h1>Agile Planner</h1>
+<main>
+  <form [formGroup]="state.form">
+    <section>
+      <app-current-sprint></app-current-sprint>
+    </section>
 
-  <section class="mb-3">
-    <app-current-sprint></app-current-sprint>
-  </section>
+    <section>
+      <app-backlogs></app-backlogs>
+    </section>
 
-  <section class="mb-3">
-    <app-backlogs></app-backlogs>
-  </section>
+    <section>
+      <app-story-attic></app-story-attic>
+    </section>
 
-  <section class="mb-3">
-    <app-story-attic></app-story-attic>
-  </section>
-
-  <section>
-    <app-sprints></app-sprints>
-  </section>
-</form>
+    <section>
+      <app-sprints></app-sprints>
+    </section>
+  </form>
+</main>

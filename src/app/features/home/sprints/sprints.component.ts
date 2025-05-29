@@ -1,35 +1,23 @@
 import { Component, Signal } from '@angular/core';
-import { MatButton, MatButtonModule } from "@angular/material/button";
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from "@angular/material/card";
 import { StateService } from '../../../shared/services/state.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AgileService } from '../../../shared/services/agile.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
+import { RetroCardModule } from '../../../shared/ui/retro-card';
+import { DateFormatterDirective } from '../../../shared/ui/directives/date-formatter.directive';
 
 @Component({
   selector: 'app-sprints',
   imports: [
-    MatButton,
-    MatCard,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
     CdkDragHandle,
     CdkDrag,
     CdkDropList,
-    MatButtonModule,
-    MatDatepickerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RetroCardModule,
+    DateFormatterDirective
   ],
   templateUrl: './sprints.component.html'
 })

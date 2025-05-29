@@ -1,30 +1,21 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CdkDrag, CdkDragHandle } from '@angular/cdk/drag-drop';
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
-import { MatIconButton } from '@angular/material/button';
-import { MatFormField, MatInput } from '@angular/material/input';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AgileService } from '../../../../shared/services/agile.service';
 import { BacklogFormModel, backlogFromForm } from '../../../../shared/models/backlog.model';
-import { MatIcon } from '@angular/material/icon';
 import { StateService } from '../../../../shared/services/state.service';
 import { map, Observable, startWith } from 'rxjs';
+import { RetroCardModule } from '../../../../shared/ui/retro-card';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-backlog',
+  standalone: true,
   imports: [
     CdkDrag,
     CdkDragHandle,
-    MatCard,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
-    MatFormField,
-    MatIcon,
-    MatIconButton,
-    MatInput,
     ReactiveFormsModule,
+    RetroCardModule,
     AsyncPipe
   ],
   templateUrl: './backlog.component.html'
