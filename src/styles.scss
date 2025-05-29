@@ -6,6 +6,7 @@ section {
   margin: 0;
   padding: 0 0.75rem;
   border: 1px solid rgba(theme.$amber, 0.5);
+  box-shadow: 0 0 8px rgba(theme.$amber, 0.25);
 }
 
 main {
@@ -15,6 +16,7 @@ main {
 
 h1, h2 {
   color: theme.$dark-teal;
+  text-shadow: 0 0 8px rgba(theme.$dark-teal, 0.75);
   text-transform: uppercase;
   line-height: 1.8;
 }
@@ -62,6 +64,7 @@ button.retro {
   background-color: transparent;
   border: none;
   color: theme.$amber;
+  text-shadow: 0 0 8px rgba(theme.$amber, 0.75);
   font-family: theme.$font;
   font-weight: bold;
   cursor: pointer;
@@ -101,6 +104,7 @@ button.retro {
 
   &.danger {
     color: theme.$red;
+    text-shadow: 0 0 8px rgba(theme.$red, 0.75);
   }
 
   &.big {
