@@ -1,7 +1,7 @@
 <div class="d-flex flex-column">
   <h2><span>## BACKLOGS || ACP-002</span></h2>
 
-  <div cdkDropList (cdkDropListDropped)="onBacklogDrop($event)">
+  <div cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="onBacklogDrop($event)">
     @for (backlog of state.form.controls.backlogs.controls; track backlog.value.id) {
       <app-backlog [backlog]="backlog" (remove)="state.removeBacklog(backlog.value.id!)"></app-backlog>
     }

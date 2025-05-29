@@ -4,10 +4,14 @@
 </div>
 
 <div class="d-flex flex-column">
-  <div cdkDropList (cdkDropListDropped)="onSprintDrop($event)">
+  <div
+    cdkDropList
+    cdkDropListLockAxis="y"
+    (cdkDropListDropped)="onSprintDrop($event)"
+  >
     @for (sprint of state.form.controls.sprints.controls; track sprint.value.id) {
-      <form [formGroup]="sprint">
-        <retro-card cdkDrag>
+      <form [formGroup]="sprint" cdkDrag>
+        <retro-card>
           <retro-card-header>
             <button cdkDragHandle class="retro small">::</button>
 
