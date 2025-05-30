@@ -1,0 +1,83 @@
+@use 'theme' as theme;
+
+.signal-widget {
+  display: flex;
+  align-items: flex-end;
+  height: 30px;
+  margin-left: 20px;
+  padding: 0 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(theme.$teal, 0.5);
+  box-shadow: 0 0 5px rgba(theme.$teal, 0.3) inset;
+
+  .signal-bar {
+    width: 5px;
+    margin: 0 2px;
+    background-color: theme.$red;
+
+    &.bar1 {
+      height: 5px;
+      animation: signal-bar1 3s infinite;
+    }
+
+    &.bar2 {
+      height: 0;
+      animation: signal-bar2 3s infinite;
+    }
+
+    &.bar3 {
+      height: 0;
+      animation: signal-bar3 3s infinite;
+    }
+
+    &.bar4 {
+      height: 0;
+      animation: signal-bar4 3s infinite;
+    }
+
+    &.bar5 {
+      height: 0;
+      animation: signal-bar5 3s infinite;
+    }
+  }
+}
+
+@keyframes signal-bar1 {
+  0% { height: 5px; background-color: theme.$red; }
+  25% { height: 5px; background-color: theme.$amber; }
+  50% { height: 5px; background-color: theme.$amber; }
+  75% { height: 5px; background-color: theme.$green; }
+  100% { height: 5px; background-color: theme.$green; }
+}
+
+@keyframes signal-bar2 {
+  0% { height: 0; background-color: theme.$red; }
+  25% { height: 10px; background-color: theme.$amber; }
+  50% { height: 10px; background-color: theme.$amber; }
+  75% { height: 10px; background-color: theme.$green; }
+  100% { height: 10px; background-color: theme.$green; }
+}
+
+@keyframes signal-bar3 {
+  0% { height: 0; background-color: theme.$red; }
+  25% { height: 0; background-color: theme.$amber; }
+  50% { height: 15px; background-color: theme.$amber; }
+  75% { height: 15px; background-color: theme.$green; }
+  100% { height: 15px; background-color: theme.$green; }
+}
+
+@keyframes signal-bar4 {
+  0% { height: 0; background-color: theme.$red; }
+  25% { height: 0; background-color: theme.$amber; }
+  50% { height: 0; background-color: theme.$amber; }
+  75% { height: 20px; background-color: theme.$green; }
+  100% { height: 20px; background-color: theme.$green; }
+}
+
+@keyframes signal-bar5 {
+  0% { height: 0; background-color: theme.$red; }
+  25% { height: 0; background-color: theme.$amber; }
+  50% { height: 0; background-color: theme.$amber; }
+  75% { height: 25px; background-color: theme.$green; }
+  100% { height: 25px; background-color: theme.$green; }
+}

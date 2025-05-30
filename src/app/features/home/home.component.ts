@@ -5,6 +5,7 @@ import { StateService } from '../../shared/services/state.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoryAtticComponent } from './story-attic/story-attic.component';
 import { CurrentSprintComponent } from './current-sprint/current-sprint.component';
+import { HeaderComponent } from './header/header.component';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ import { CurrentSprintComponent } from './current-sprint/current-sprint.componen
     SprintsComponent,
     ReactiveFormsModule,
     StoryAtticComponent,
-    CurrentSprintComponent
+    CurrentSprintComponent,
+    HeaderComponent
   ],
   templateUrl: './home.component.html',
   standalone: true

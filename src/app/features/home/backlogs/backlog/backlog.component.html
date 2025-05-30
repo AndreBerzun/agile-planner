@@ -3,7 +3,8 @@
     <retro-card-header>
       <button cdkDragHandle class="retro small">::</button>
       <retro-card-title>
-        BCK-LOG{{ backlog.value.id!.substring(0, 3) }} \\ ETA: {{ projectedCompletion | async }} days
+        BCK-LOG{{ backlog.value.id!.substring(0, 3) }}
+        \\ ETA: <span class="white">{{ projectedCompletion$ | calculation | async }}</span> days
       </retro-card-title>
       <button class="retro danger small" (click)="remove.emit()">X</button>
     </retro-card-header>

@@ -7,6 +7,7 @@ import { StateService } from '../../../../shared/services/state.service';
 import { map, Observable, startWith } from 'rxjs';
 import { RetroCardModule } from '../../../../shared/ui/retro-card';
 import { AsyncPipe } from '@angular/common';
+import { CalculationPipe } from '../../../../shared/pipes';
 
 @Component({
   selector: 'app-backlog',
@@ -16,7 +17,8 @@ import { AsyncPipe } from '@angular/common';
     CdkDragHandle,
     ReactiveFormsModule,
     RetroCardModule,
-    AsyncPipe
+    AsyncPipe,
+    CalculationPipe
   ],
   templateUrl: './backlog.component.html'
 })
@@ -24,13 +26,13 @@ export class BacklogComponent implements OnInit {
   @Input({required: true}) backlog!: FormGroup<BacklogFormModel>;
   @Output() remove = new EventEmitter<void>();
 
-  projectedCompletion!: Observable<number>;
+  projectedCompletion$!: Observable<number>;
 
   constructor(private readonly state: StateService, readonly agile: AgileService) {
   }
 
   ngOnInit(): void {
-    this.projectedCompletion = this.state.form.valueChanges.pipe(
+    this.projectedCompletion$ = this.state.form.valueChanges.pipe(
       startWith(this.state.form.value),
       map(() => this.agile.projectBacklogCompletion(backlogFromForm(this.backlog), this.state.sprints))
     );

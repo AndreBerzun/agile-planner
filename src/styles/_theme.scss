@@ -16,6 +16,37 @@ $font: 'Ubuntu Mono', monospace;
   --red: #{$red};
 }
 
+.teal {
+  color: $teal;
+  text-shadow: 0 0 8px rgba($teal, 0.75);
+}
+
+.dark-teal {
+  color: $dark-teal;
+  text-shadow: 0 0 8px rgba($dark-teal, 0.75);
+}
+
+.green {
+  color: $green;
+  text-shadow: 0 0 8px rgba($green, 0.75);
+}
+
+.amber {
+  color: $amber;
+  text-shadow: 0 0 8px rgba($amber, 0.75);
+}
+
+.red {
+  color: $red;
+  text-shadow: 0 0 8px rgba($red, 0.75);
+}
+
+.white {
+  color: white;
+  text-shadow: 0 0 8px rgba(white, 0.75);
+}
+
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
