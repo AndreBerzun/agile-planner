@@ -9,6 +9,6 @@
       <button class="retro danger small" (click)="remove.emit()">X</button>
     </retro-card-header>
 
-    <textarea placeholder="Enter backlog item details..." formControlName="rawInput"></textarea>
+    <storyarea placeholder="Enter backlog item details..." [control]="backlog.controls.rawInput!"></storyarea>
   </retro-card>
 </form>

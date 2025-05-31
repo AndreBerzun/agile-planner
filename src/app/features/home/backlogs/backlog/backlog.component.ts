@@ -8,6 +8,7 @@ import { map, Observable, startWith } from 'rxjs';
 import { RetroCardModule } from '../../../../shared/ui/retro-card';
 import { AsyncPipe } from '@angular/common';
 import { CalculationPipe } from '../../../../shared/pipes';
+import { StoryareaComponent } from '../../../../shared/ui/storyarea/storyarea.component';
 
 @Component({
   selector: 'app-backlog',
@@ -18,7 +19,8 @@ import { CalculationPipe } from '../../../../shared/pipes';
     ReactiveFormsModule,
     RetroCardModule,
     AsyncPipe,
-    CalculationPipe
+    CalculationPipe,
+    StoryareaComponent
   ],
   templateUrl: './backlog.component.html'
 })

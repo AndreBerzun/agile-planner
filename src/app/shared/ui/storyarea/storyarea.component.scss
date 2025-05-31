@@ -1,28 +1,5 @@
 @use 'theme' as theme;
 
-.storyarea-container {
-  position: relative;
-  width: 100%;
-}
-
-.highlighted {
-  white-space: pre-wrap;
-  word-break: break-word;
-  padding: 0.5rem;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  pointer-events: none;
-}
-
-textarea {
-  position: relative;
-  opacity: 0;
-  z-index: 1;
-}
-
 .heading {
   background-color: theme.$green;
   color: theme.$dark-teal;

@@ -27,7 +27,7 @@
             <button class="retro danger small" (click)="state.removeSprint(sprint.value.id!)">X</button>
           </retro-card-header>
 
-          <textarea placeholder="Enter sprint details..." formControlName="rawInput"></textarea>
+          <storyarea placeholder="Enter sprint details..." [control]="sprint.controls.rawInput!"></storyarea>
         </retro-card>
       </form>
     }

@@ -1,10 +1,6 @@
-<div class="storyarea-container">
-  <div class="highlighted" [innerHTML]="highlightedText"></div>
-  <textarea
-    #textArea
-    [formControl]="control"
-    [placeholder]="placeholder"
-    (input)="onInput()"
-    spellcheck="false"
-  ></textarea>
-</div>
+<textarea
+  #textArea
+  [formControl]="control"
+  [placeholder]="placeholder"
+  spellcheck="false"
+></textarea>

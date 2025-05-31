@@ -8,6 +8,7 @@ import { RetroCardModule } from '../../../shared/ui/retro-card';
 import { RetroDatepickerComponent } from '../../../shared/ui/retro-datepicker/retro-datepicker.component';
 import { CalculationPipe } from '../../../shared/pipes';
 import { AsyncPipe } from '@angular/common';
+import { StoryareaComponent } from '../../../shared/ui/storyarea/storyarea.component';
 
 @Component({
   selector: 'app-sprints',
@@ -20,7 +21,8 @@ import { AsyncPipe } from '@angular/common';
     RetroCardModule,
     RetroDatepickerComponent,
     CalculationPipe,
-    AsyncPipe
+    AsyncPipe,
+    StoryareaComponent
   ],
   templateUrl: './sprints.component.html'
 })

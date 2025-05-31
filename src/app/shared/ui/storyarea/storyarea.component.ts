@@ -1,5 +1,7 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, ElementRef, inject, Input, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { startWith } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'storyarea',
@@ -9,27 +11,16 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
   templateUrl: './storyarea.component.html',
   styleUrl: './storyarea.component.scss'
 })
-export class StoryareaComponent {
+export class StoryareaComponent implements AfterViewInit {
   @ViewChild('textArea') textArea!: ElementRef<HTMLTextAreaElement>;
-  @Input({required: true}) control!: FormControl<string | null | undefined>;
+  @Input({required: true}) control!: FormControl;
   @Input() placeholder = '';
+  readonly destroyRef = inject(DestroyRef);
 
-  userInput = '';
-  highlightedText = '';
-
-  onInput(): void {
-    this.updateHighlight();
-    this.autoResize();
-  }
-
-  updateHighlight(): void {
-    this.highlightedText = this.userInput
-      .replace(/^(#+ .*)$/gm, match =>
-        `<span class="heading">${match.toUpperCase()}</span>`
-      )
-      .replace(/\[(\d+)\]/g, (_, num) =>
-        `<span class="number">[<span class="white">${num}</span>]</span>`
-      );
+  ngAfterViewInit(): void {
+    this.control.valueChanges
+      .pipe(startWith(this.control.value), takeUntilDestroyed(this.destroyRef))
+      .subscribe(this.autoResize.bind(this));
   }
 
   autoResize(): void {
