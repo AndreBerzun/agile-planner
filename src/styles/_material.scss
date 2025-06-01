@@ -1,0 +1,59 @@
+@use 'theme' as theme;
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme((
+    color: (
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: theme.$font,
+    density: 0,
+  ));
+}
+
+.mat-calendar {
+  font: theme.$font;
+  color: theme.$teal;
+  background-color: theme.$dark-teal;
+  border: 1px solid rgba(theme.$teal, 0.5);
+  text-transform: uppercase;
+
+  .mat-calendar-table-header th {
+    color: theme.$green;
+  }
+
+  .mat-calendar-body-cell-content, .mat-calendar-body-label,  {
+    color: theme.$teal;
+
+    &.mat-calendar-body-selected {
+      color: theme.$dark-teal;
+      background-color: theme.$teal;
+    }
+
+    &.mat-calendar-body-today {
+      border-color: theme.$teal !important;
+    }
+  }
+
+  button.mat-calendar-period-button, button.mat-calendar-previous-button, button.mat-calendar-next-button {
+    color: theme.$amber !important;
+  }
+}
+
+.cdk-drag-preview {
+  overflow: hidden;
+}
+
+.cdk-drag-placeholder {
+  visibility: hidden;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging .cdk-drag {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

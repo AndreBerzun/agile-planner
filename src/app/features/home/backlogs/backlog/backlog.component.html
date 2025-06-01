@@ -1,23 +1,14 @@
-<form [formGroup]="backlog">
-  <mat-card class="lighter" cdkDrag>
-    <mat-card-header>
-      <mat-card-title class="d-flex align-items-center">
-        <mat-icon cdkDragHandle>drag_indicator</mat-icon>
+<form [formGroup]="backlog" cdkDrag>
+  <retro-card>
+    <retro-card-header>
+      <button cdkDragHandle class="retro small">::</button>
+      <retro-card-title>
+        BCK-LOG{{ backlog.value.id!.substring(0, 3) }}
+        \\ ETA: <span class="white">{{ projectedCompletion$ | calculation | async }}</span> days
+      </retro-card-title>
+      <button class="retro danger small" (click)="remove.emit()">X</button>
+    </retro-card-header>
 
-        <mat-form-field class="flex-grow-1">
-          <input matInput placeholder="Backlog Name" formControlName="name">
-        </mat-form-field>
-
-        <span class="mx-2">{{ projectedCompletion | async }} days</span>
-
-        <button mat-icon-button (click)="remove.emit()">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-card-title>
-    </mat-card-header>
-
-    <mat-card-content>
-      <textarea placeholder="Enter backlog item details..." formControlName="rawInput"></textarea>
-    </mat-card-content>
-  </mat-card>
+    <storyarea placeholder="Enter backlog item details..." [control]="backlog.controls.rawInput!"></storyarea>
+  </retro-card>
 </form>

@@ -1,49 +1,37 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>
-      <div class="d-flex align-items-center">
-        <h2 class="flex-grow-1">Past Sprints</h2>
-        <span>Median Velocity: {{ medianVelocity() }}</span>
-      </div>
-    </mat-card-title>
-  </mat-card-header>
+<div class="d-flex align-items-center">
+  <h2 class="flex-grow-1"><span>## PAST_SPRINTS || ACP-004</span></h2>
+  <b>~VLCTY: <span class="white">{{ medianVelocity$ | calculation | async }}</span> //</b>
+</div>
 
-  <mat-card-content>
-    <button (click)="state.addSprint()" mat-raised-button color="primary">Add sprint</button>
+<div class="d-flex flex-column">
+  <div
+    cdkDropList
+    cdkDropListLockAxis="y"
+    (cdkDropListDropped)="onSprintDrop($event)"
+  >
+    @for (sprint of state.form.controls.sprints.controls; track sprint.value.id) {
+      <form [formGroup]="sprint" cdkDrag>
+        <retro-card>
+          <retro-card-header>
+            <button cdkDragHandle class="retro small">::</button>
 
-    <div cdkDropList (cdkDropListDropped)="onSprintDrop($event)">
-      @for (sprint of state.form.controls.sprints.controls; track sprint.value.id) {
-        <form [formGroup]="sprint">
-          <mat-card class="lighter" cdkDrag>
-            <mat-card-header>
-              <mat-card-title class="d-flex align-items-center">
-                <mat-icon cdkDragHandle>drag_indicator</mat-icon>
+            <retro-card-title>
+              <retro-datepicker [control]="sprint.controls.startDate!" placeholder="start_date"
+              ></retro-datepicker>
+            </retro-card-title>
+            <retro-card-title>
+              <retro-datepicker [control]="sprint.controls.endDate!" placeholder="end_date"
+              ></retro-datepicker>
+            </retro-card-title>
 
-                <mat-form-field class="flex-grow-1">
-                  <mat-label>Start Date</mat-label>
-                  <input matInput [matDatepicker]="startPicker" formControlName="startDate">
-                  <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
-                  <mat-datepicker #startPicker></mat-datepicker>
-                </mat-form-field>
-                <mat-form-field class="flex-grow-1">
-                  <mat-label>End Date</mat-label>
-                  <input matInput [matDatepicker]="endPicker" formControlName="endDate">
-                  <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
-                  <mat-datepicker #endPicker></mat-datepicker>
-                </mat-form-field>
+            <button class="retro danger small" (click)="state.removeSprint(sprint.value.id!)">X</button>
+          </retro-card-header>
 
-                <button mat-icon-button (click)="state.removeSprint(sprint.value.id!)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </mat-card-title>
-            </mat-card-header>
+          <storyarea placeholder="Enter sprint details..." [control]="sprint.controls.rawInput!"></storyarea>
+        </retro-card>
+      </form>
+    }
+  </div>
 
-            <mat-card-content>
-              <textarea placeholder="Enter sprint details..." formControlName="rawInput"></textarea>
-            </mat-card-content>
-          </mat-card>
-        </form>
-      }
-    </div>
-  </mat-card-content>
-</mat-card>
+  <button class="retro big mb-5" (click)="state.addSprint()">Add_sprint</button>
+</div>

@@ -1,46 +1,39 @@
-import { Component, Signal } from '@angular/core';
-import { MatButton, MatButtonModule } from "@angular/material/button";
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from "@angular/material/card";
+import { Component } from '@angular/core';
 import { StateService } from '../../../shared/services/state.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { AgileService } from '../../../shared/services/agile.service';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map } from 'rxjs';
+import { map, Observable, startWith } from 'rxjs';
+import { RetroCardModule } from '../../../shared/ui/retro-card';
+import { RetroDatepickerComponent } from '../../../shared/ui/retro-datepicker/retro-datepicker.component';
+import { CalculationPipe } from '../../../shared/pipes';
+import { AsyncPipe } from '@angular/common';
+import { StoryareaComponent } from '../../../shared/ui/storyarea/storyarea.component';
 
 @Component({
   selector: 'app-sprints',
   imports: [
-    MatButton,
-    MatCard,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
     CdkDragHandle,
     CdkDrag,
     CdkDropList,
-    MatButtonModule,
-    MatDatepickerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RetroCardModule,
+    RetroDatepickerComponent,
+    CalculationPipe,
+    AsyncPipe,
+    StoryareaComponent
   ],
   templateUrl: './sprints.component.html'
 })
 export class SprintsComponent {
-  readonly medianVelocity: Signal<number>;
+  readonly medianVelocity$: Observable<number>;
 
   constructor(readonly state: StateService, readonly agile: AgileService) {
-    this.medianVelocity = toSignal(
-      this.state.form.valueChanges.pipe(map(() => agile.calculateMedianVelocity(this.state.sprints))),
-      {initialValue: agile.calculateMedianVelocity(this.state.sprints)}
-    );
+    this.medianVelocity$ = this.state.form.valueChanges.pipe(
+      startWith(this.state.form.value),
+      map(() => agile.calculateMedianVelocity(this.state.sprints))
+    )
   }
 
   onSprintDrop(event: CdkDragDrop<any[]>): void {

@@ -1,15 +1,11 @@
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Product Backlog</mat-card-title>
-  </mat-card-header>
+<div class="d-flex flex-column">
+  <h2><span>## BACKLOGS || ACP-002</span></h2>
 
-  <mat-card-content>
-    <button (click)="state.addBacklog()" mat-raised-button color="primary">Add backlog</button>
+  <div cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="onBacklogDrop($event)">
+    @for (backlog of state.form.controls.backlogs.controls; track backlog.value.id) {
+      <app-backlog [backlog]="backlog" (remove)="state.removeBacklog(backlog.value.id!)"></app-backlog>
+    }
+  </div>
 
-    <div cdkDropList (cdkDropListDropped)="onBacklogDrop($event)">
-      @for (backlog of state.form.controls.backlogs.controls; track backlog.value.id) {
-        <app-backlog [backlog]="backlog" (remove)="state.removeBacklog(backlog.value.id!)"></app-backlog>
-      }
-    </div>
-  </mat-card-content>
-</mat-card>
+  <button class="retro big mb-5" (click)="state.addBacklog()">Add_backlog</button>
+</div>

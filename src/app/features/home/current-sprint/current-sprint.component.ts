@@ -1,28 +1,17 @@
 import { Component } from '@angular/core';
-import { MatButton, MatButtonModule } from '@angular/material/button';
-import { MatCard, MatCardContent, MatCardHeader, MatCardTitle } from '@angular/material/card';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
 import { StateService } from '../../../shared/services/state.service';
 import { AgileService } from '../../../shared/services/agile.service';
 import { SprintFormModel } from '../../../shared/models/sprint.model';
+import { RetroCardComponent } from '../../../shared/ui/retro-card/retro-card.component';
+import { RetroCardModule } from '../../../shared/ui/retro-card';
 
 @Component({
   selector: 'app-current-sprint',
   imports: [
-    MatButton,
-    MatCard,
-    MatCardContent,
-    MatCardHeader,
-    MatCardTitle,
     FormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RetroCardModule
   ],
   standalone: true,
   templateUrl: './current-sprint.component.html'

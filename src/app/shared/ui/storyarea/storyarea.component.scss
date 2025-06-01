@@ -1,0 +1,13 @@
+@use 'theme' as theme;
+
+.heading {
+  background-color: theme.$green;
+  color: theme.$dark-teal;
+  padding: 0 0.5rem;
+  display: block;
+  text-transform: uppercase;
+}
+
+.story-points {
+  color: white;
+}

@@ -1,0 +1,21 @@
+@use 'theme' as theme;
+
+.retro-card {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 0;
+
+  overflow: hidden;
+
+  background-color: theme.$dark-teal;
+  border: 1px solid rgba(theme.$teal, 0.5);
+  border-radius: 10px;
+
+  font-family: 'Ubuntu Mono', monospace;
+
+  .retro-card-content {
+    font-size: 16px;
+    line-height: 1.5;
+    color: theme.$teal;
+  }
+}

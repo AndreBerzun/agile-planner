@@ -1,2 +1,123 @@
-@import 'styles/base';
-@import 'styles/material-overrides';
+@use 'bootstrap/scss/bootstrap-grid' as bootstrap-grid;
+@use 'styles/theme' as theme;
+@use 'styles/material' as material;
+
+section {
+  margin: 0;
+  padding: 0 0.75rem;
+  border: 1px solid rgba(theme.$amber, 0.5);
+  box-shadow: 0 0 8px rgba(theme.$amber, 0.25);
+}
+
+main {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+h1, h2 {
+  color: theme.$dark-teal;
+  text-shadow: 0 0 8px rgba(theme.$dark-teal, 0.75);
+  text-transform: uppercase;
+  line-height: 1.8;
+}
+
+h1 span {
+  background-color: theme.$green;
+}
+
+h2 span {
+  background-color: theme.$teal;
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  overflow: hidden;
+  border: none;
+  resize: none;
+
+  color: theme.$teal;
+  background-color: transparent;
+  font-weight: bold;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+input {
+  width: 100%;
+  border: none;
+
+  color: theme.$teal;
+  background-color: transparent;
+  font-weight: bold;
+  text-transform: uppercase;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+button.retro {
+  background-color: transparent;
+  border: none;
+  color: theme.$amber;
+  text-shadow: 0 0 8px rgba(theme.$amber, 0.75);
+  font-family: theme.$font;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 6px 16px;
+  text-transform: uppercase;
+  position: relative;
+  transition: all 0.2s ease;
+
+  &::before {
+    content: '[ ';
+    opacity: 0.7;
+  }
+
+  &::after {
+    content: ' ]';
+    opacity: 0.7;
+  }
+
+  &:hover, &:focus {
+    &::before, &::after {
+      opacity: 1;
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    color: rgba(theme.$amber, 0.3);
+    cursor: not-allowed;
+  }
+
+  &[cdkDragHandle] {
+    cursor: grab;
+  }
+
+  &.danger {
+    color: theme.$red;
+    text-shadow: 0 0 8px rgba(theme.$red, 0.75);
+  }
+
+  &.big {
+    font-size: 18px;
+  }
+
+  &.small {
+    &::before {
+      content: '[';
+    }
+
+    &::after {
+      content: ']';
+    }
+  }
+}

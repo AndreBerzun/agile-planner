@@ -32,7 +32,7 @@ export class StateService {
   }
 
   addBacklog(): void {
-    this.form.controls.backlogs.insert(0, createBacklogForm(this.fb, {id: uuidv4()}));
+    this.form.controls.backlogs.push(createBacklogForm(this.fb, {id: uuidv4()}));
   }
 
   sortBacklogs(previousIndex: number, currentIndex: number): void {
@@ -46,7 +46,7 @@ export class StateService {
   }
 
   addSprint(): void {
-    this.form.controls.sprints.insert(0, createSprintForm(this.fb, {
+    this.form.controls.sprints.push(createSprintForm(this.fb, {
       id: uuidv4(),
       startDate: new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + 1)),
       endDate: new Date(new Date().setDate(new Date().getDate() - new Date().getDay() + defaultSprintLength))
