@@ -2,6 +2,6 @@
 
 <retro-card>
   <form [formGroup]="state.form">
-    <textarea placeholder="Stories without a backlog" formControlName="storyAttic"></textarea>
+    <storyarea placeholder="Stories without a backlog" [control]="state.form.controls.storyAttic"></storyarea>
   </form>
 </retro-card>
