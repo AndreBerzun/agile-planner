@@ -1,11 +1,12 @@
-<form [formGroup]="backlog" cdkDrag>
+<form [formGroup]="backlog()" cdkDrag>
   <retro-card>
-    <expandable [expanded]="backlog.controls.expanded.value!" collapsedHeight="38px">
+    <expandable [expanded]="backlog().controls.expanded.value!" collapsedHeight="38px">
       <expandable-header>
         <retro-card-header>
           <button cdkDragHandle (click)="toggleExpanded()" class="retro small">::</button>
           <retro-card-title>
-            BCK-LOG{{ backlog.value.id!.substring(0, 3) }}
+            BCK-LOG{{ backlog().value.id!.substring(0, 3) }}
+            \\ SP: <span class="white">{{ parsedStoryPoints$ | calculation | async }}</span>
             \\ ETA: <span class="white">{{ projectedCompletion$ | calculation | async }}</span> days
           </retro-card-title>
           <button class="retro danger small" (click)="remove.emit()">X</button>
@@ -13,7 +14,7 @@
       </expandable-header>
 
       <expandable-content>
-        <storyarea placeholder="Enter backlog item details..." [control]="backlog.controls.rawInput!"></storyarea>
+        <storyarea placeholder="Enter backlog item details..." [control]="backlog().controls.rawInput!"></storyarea>
       </expandable-content>
     </expandable>
   </retro-card>

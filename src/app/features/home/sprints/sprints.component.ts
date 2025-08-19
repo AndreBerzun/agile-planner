@@ -32,7 +32,8 @@ export class SprintsComponent {
   constructor(readonly state: StateService, readonly agile: AgileService) {
     this.medianVelocity$ = this.state.form.valueChanges.pipe(
       startWith(this.state.form.value),
-      map(() => agile.calculateMedianVelocity(this.state.sprints))
+      map(() => agile.calculateMedianVelocity(this.state.sprints)),
+      map((median) => Math.floor(median * 100) / 100)
     )
   }
 
