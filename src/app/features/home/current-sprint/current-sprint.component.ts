@@ -3,7 +3,6 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StateService } from '../../../shared/services/state.service';
 import { AgileService } from '../../../shared/services/agile.service';
 import { SprintFormModel } from '../../../shared/models/sprint.model';
-import { RetroCardComponent } from '../../../shared/ui/retro-card/retro-card.component';
 import { RetroCardModule } from '../../../shared/ui/retro-card';
 import { StoryareaComponent } from '../../../shared/ui/storyarea/storyarea.component';
 

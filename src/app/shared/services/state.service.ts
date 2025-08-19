@@ -32,7 +32,7 @@ export class StateService {
   }
 
   addBacklog(): void {
-    this.form.controls.backlogs.push(createBacklogForm(this.fb, {id: uuidv4()}));
+    this.form.controls.backlogs.push(createBacklogForm(this.fb, {id: uuidv4(), expanded: true}));
   }
 
   sortBacklogs(previousIndex: number, currentIndex: number): void {

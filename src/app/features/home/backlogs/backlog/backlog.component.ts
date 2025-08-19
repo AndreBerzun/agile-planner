@@ -9,6 +9,7 @@ import { RetroCardModule } from '../../../../shared/ui/retro-card';
 import { AsyncPipe } from '@angular/common';
 import { CalculationPipe } from '../../../../shared/pipes';
 import { StoryareaComponent } from '../../../../shared/ui/storyarea/storyarea.component';
+import { ExpandableModule } from '../../../../shared/ui/expandable';
 
 @Component({
   selector: 'app-backlog',
@@ -20,7 +21,8 @@ import { StoryareaComponent } from '../../../../shared/ui/storyarea/storyarea.co
     RetroCardModule,
     AsyncPipe,
     CalculationPipe,
-    StoryareaComponent
+    StoryareaComponent,
+    ExpandableModule
   ],
   templateUrl: './backlog.component.html'
 })
@@ -38,5 +40,10 @@ export class BacklogComponent implements OnInit {
       startWith(this.state.form.value),
       map(() => this.agile.projectBacklogCompletion(backlogFromForm(this.backlog), this.state.sprints))
     );
+  }
+
+  toggleExpanded(): void {
+    const expandedControl = this.backlog.controls.expanded;
+    expandedControl.setValue(!expandedControl.value);
   }
 }

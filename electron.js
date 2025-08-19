@@ -28,7 +28,7 @@ function createWindow() {
   });
 
   // Log console messages from renderer
-  mainWindow.webContents.on('console-message', (event, level, message, line, sourceId) => {
+  mainWindow.webContents.on('console-message', (event, level, message) => {
     console.log(`[Renderer ${level}]: ${message}`);
   });
 
