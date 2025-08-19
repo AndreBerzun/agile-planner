@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { StateService } from '../../../shared/services/state.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { BacklogComponent } from './backlog/backlog.component';
+import { ExpandableModule } from '../../../shared/ui/expandable';
 
 
 @Component({
@@ -11,13 +12,14 @@ import { BacklogComponent } from './backlog/backlog.component';
     FormsModule,
     CdkDropList,
     ReactiveFormsModule,
-    BacklogComponent
+    BacklogComponent,
+    ExpandableModule
   ],
   templateUrl: './backlogs.component.html'
 })
 export class BacklogsComponent {
-  constructor(readonly state: StateService) {
-  }
+  readonly state = inject(StateService);
+  expanded = true;
 
   onBacklogDrop(event: CdkDragDrop<any[]>): void {
     this.state.sortBacklogs(event.previousIndex, event.currentIndex);

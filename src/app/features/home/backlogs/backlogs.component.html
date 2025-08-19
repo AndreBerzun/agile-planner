@@ -1,11 +1,22 @@
-<div class="d-flex flex-column">
-  <h2><span>## BACKLOGS || ACP-002</span></h2>
+<expandable [expanded]="expanded">
+  <expandable-header>
+    <div class="d-flex flex-row align-items-center justify-content-between">
+      <h2><span>## BACKLOGS || ACP-002</span></h2>
+      <button class="retro small" (click)="expanded = !expanded">
+        {{ expanded ? '▼' : '▲' }}
+      </button>
+    </div>
+  </expandable-header>
 
-  <div cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="onBacklogDrop($event)">
-    @for (backlog of state.form.controls.backlogs.controls; track backlog.value.id) {
-      <app-backlog [backlog]="backlog" (remove)="state.removeBacklog(backlog.value.id!)"></app-backlog>
-    }
-  </div>
+  <expandable-content>
+    <div class="d-flex flex-column mb-5">
+      <div cdkDropList cdkDropListLockAxis="y" (cdkDropListDropped)="onBacklogDrop($event)">
+        @for (backlog of state.form.controls.backlogs.controls; track backlog.value.id) {
+          <app-backlog [backlog]="backlog" (remove)="state.removeBacklog(backlog.value.id!)"></app-backlog>
+        }
+      </div>
 
-  <button class="retro big mb-5" (click)="state.addBacklog()">Add_backlog</button>
-</div>
+      <button class="retro big" (click)="state.addBacklog()">Add_backlog</button>
+    </div>
+  </expandable-content>
+</expandable>

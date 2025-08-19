@@ -11,6 +11,11 @@ import { ExpandableComponent } from './expandable.component';
     >
       <ng-content></ng-content>
     </div>
+  `,
+  styles: `
+    .expandable-content {
+      overflow: hidden;
+    }
   `
 })
 export class ExpandableContentComponent {

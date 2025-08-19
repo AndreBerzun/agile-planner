@@ -1,7 +1,18 @@
-<h2><span>## STORY_ATTIC || ACP-003</span></h2>
+<expandable [expanded]="expanded">
+  <expandable-header>
+    <div class="d-flex flex-row align-items-center justify-content-between">
+      <h2 class="flex-grow-0"><span>## STORY_ATTIC || ACP-003</span></h2>
+      <button class="retro small" (click)="expanded = !expanded">
+        {{ expanded ? '▼' : '▲' }}
+      </button>
+    </div>
+  </expandable-header>
 
-<retro-card>
-  <form [formGroup]="state.form">
-    <storyarea placeholder="Stories without a backlog" [control]="state.form.controls.storyAttic"></storyarea>
-  </form>
-</retro-card>
+  <expandable-content>
+    <retro-card>
+      <form [formGroup]="state.form">
+        <storyarea placeholder="Stories without a backlog" [control]="state.form.controls.storyAttic"></storyarea>
+      </form>
+    </retro-card>
+  </expandable-content>
+</expandable>
