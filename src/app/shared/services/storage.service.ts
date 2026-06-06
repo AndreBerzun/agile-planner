@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AppState } from '../models/app-state.model';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -42,12 +43,16 @@ export class StorageService {
   private parseJSONState(jsonData: string): AppState {
     const state = JSON.parse(jsonData);
 
+    if (!state.currentSprint) {
+      state.currentSprint = { id: uuidv4() };
+    }
+
     // Convert string dates back to Date objects
     if (state.sprints) {
       state.sprints = state.sprints.map((sprint: any) => ({
         ...sprint,
-        startDate: new Date(sprint.startDate),
-        endDate: new Date(sprint.endDate)
+        startDate: sprint.startDate ? new Date(sprint.startDate) : undefined,
+        endDate: sprint.endDate ? new Date(sprint.endDate) : undefined
       }));
     }
 
