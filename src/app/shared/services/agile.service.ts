@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { StoryParserService } from './story-parser.service';
-import { differenceInDays } from 'date-fns';
+import { differenceInCalendarDays } from 'date-fns';
 import { Sprint } from '../models/sprint.model';
 import { defaultSprintLength } from './constants';
-import { Backlog } from '../models/backlog.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,23 +11,22 @@ export class AgileService {
   constructor(private readonly storyParser: StoryParserService) {
   }
 
-  projectBacklogCompletion(backlog: Backlog, sprints: Sprint[]): number {
-    const medianVelocity = this.calculateMedianVelocity(sprints);
+  projectBacklogCompletion(backlog: string, sprints: Sprint[], startingVelocity = 0): number {
+    const medianVelocity = this.calculateMedianVelocity(sprints, startingVelocity);
     if (medianVelocity === 0) return -1;
 
-    const storyPoints = this.parseStoryPoints(backlog.rawInput ?? '');
-    return Math.floor(defaultSprintLength * (storyPoints / medianVelocity));
+    const storyPoints = this.parseStoryPoints(backlog);
+    return Math.ceil(defaultSprintLength * (storyPoints / medianVelocity));
   }
 
-  calculateMedianVelocity(sprints: Sprint[]): number {
-    if (sprints.length === 0) return 0;
-
-    const normalizedStoryPointsSum = sprints
+  calculateMedianVelocity(sprints: Sprint[], startingVelocity = 0): number {
+    const velocities = sprints
       .map(this.setStoryPoints.bind(this))
-      .map(this.normalizeStoryPoints.bind(this))
-      .reduce((sum, previousValue) => sum + previousValue, 0);
+      .map(this.normalizeStoryPoints.bind(this));
+    if (startingVelocity > 0) velocities.push(startingVelocity);
+    if (velocities.length === 0) return 0;
 
-    return normalizedStoryPointsSum / sprints.length;
+    return velocities.reduce((sum, previousValue) => sum + previousValue, 0) / velocities.length;
   }
 
   private setStoryPoints(sprint: Sprint): Sprint {
@@ -43,7 +41,9 @@ export class AgileService {
   }
 
   private normalizeStoryPoints(sprint: Sprint): number {
-    const sprintDays = differenceInDays(sprint.endDate!, sprint.startDate!);
+    if (!sprint.startDate || !sprint.endDate) return sprint.storyPoints!;
+
+    const sprintDays = Math.max(1, differenceInCalendarDays(sprint.endDate, sprint.startDate) + 1);
     return sprint.storyPoints! * (defaultSprintLength / sprintDays);
   }
 }

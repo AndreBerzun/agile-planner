@@ -1,45 +1,35 @@
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Backlog, BacklogFormModel, backlogFromForm, createBacklogForm } from './backlog.model';
-import { createSprintForm, Sprint, SprintFormModel, sprintFromForm } from './sprint.model';
-import { v4 as uuidv4 } from 'uuid';
+import { createProjectForm, newProject, Project, ProjectFormModel, projectFromForm } from './project.model';
 
-export const initialState: AppState = {
-  currentSprint: {id: uuidv4()},
-  sprints: [],
-  backlogs: [],
-  storyAttic: ''
-}
+export const defaultProjectName = 'New_Project';
 
 export type AppState = {
-  currentSprint: Sprint;
-  sprints: Sprint[];
-  backlogs: Backlog[];
-  storyAttic: string;
+  activeProjectId: string;
+  projects: Project[];
 }
 
 export type AppStateFormModel = {
-  currentSprint: FormGroup<SprintFormModel>;
-  sprints: FormArray<FormGroup<SprintFormModel>>;
-  backlogs: FormArray<FormGroup<BacklogFormModel>>;
-  storyAttic: FormControl<string | null>;
+  activeProjectId: FormControl<string | null>;
+  projects: FormArray<FormGroup<ProjectFormModel>>;
+}
+
+export function initialState(): AppState {
+  const project = newProject(defaultProjectName);
+  return {activeProjectId: project.id, projects: [project]};
 }
 
 export function createAppStateForm(fb: FormBuilder, state: AppState): FormGroup<AppStateFormModel> {
   return fb.group<AppStateFormModel>({
-    currentSprint: createSprintForm(fb, state.currentSprint),
-    sprints: fb.array(state.sprints.map(sprint => createSprintForm(fb, sprint))),
-    backlogs: fb.array(state.backlogs.map(backlog => createBacklogForm(fb, backlog))),
-    storyAttic: fb.control(state.storyAttic)
+    activeProjectId: fb.control(state.activeProjectId),
+    projects: fb.array(state.projects.map(project => createProjectForm(fb, project)))
   });
 }
 
 export function appStateFromForm(form: FormGroup<AppStateFormModel>): AppState {
   return {
-    currentSprint: sprintFromForm(form.controls.currentSprint),
-    sprints: form.controls.sprints.controls.map(sprint => sprintFromForm(sprint)),
-    backlogs: form.controls.backlogs.controls.map(backlog => backlogFromForm(backlog)),
-    storyAttic: form.controls.storyAttic.value ?? ''
-  }
+    activeProjectId: form.controls.activeProjectId.value!,
+    projects: form.controls.projects.controls.map(project => projectFromForm(project))
+  };
 }
 
 export type Story = {

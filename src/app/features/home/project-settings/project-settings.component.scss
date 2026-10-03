@@ -1,0 +1,20 @@
+@use 'theme' as theme;
+
+label {
+  padding: 8px 16px;
+
+  & + label {
+    border-top: 1px solid rgba(theme.$teal, 0.5);
+  }
+
+  b {
+    margin-right: 12px;
+    white-space: nowrap;
+  }
+
+  input {
+    color: white;
+    font-family: theme.$font;
+    font-size: 16px;
+  }
+}

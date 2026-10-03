@@ -1,0 +1,20 @@
+<expandable [expanded]="expanded">
+  <expandable-header>
+    <div class="d-flex flex-row align-items-center">
+      <h2 class="flex-grow-1"><span>## BACKLOG || ACP-002</span></h2>
+      <b>
+        SP: <span class="white">{{ storyPoints$ | calculation | async }}</span>
+        \\ ETA: <span class="white">{{ projectedCompletion$ | calculation | async }}</span> days
+      </b>
+      <button type="button" class="retro small" (click)="expanded = !expanded">
+        {{ expanded ? '▼' : '▲' }}
+      </button>
+    </div>
+  </expandable-header>
+
+  <expandable-content>
+    <retro-card>
+      <storyarea placeholder="Enter backlog stories..." [control]="state.form.controls.backlog"></storyarea>
+    </retro-card>
+  </expandable-content>
+</expandable>

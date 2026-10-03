@@ -49,5 +49,10 @@ describe('StoriesParserService', () => {
     const expected = [{points: 5, title: 'Story with leading zero'}];
     expect(service.parseStories(input)).toEqual(expected);
   });
-});
 
+  it('should parse fractional story points', () => {
+    const input = '- [0.5] Half story\n- [1,5] Comma story';
+    const expected = [{points: 0.5, title: 'Half story'}, {points: 1.5, title: 'Comma story'}];
+    expect(service.parseStories(input)).toEqual(expected);
+  });
+});

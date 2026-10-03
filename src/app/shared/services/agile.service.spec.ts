@@ -31,7 +31,7 @@ describe('AgileService', () => {
     const sprint: Sprint = {
       id: uuidv4(),
       startDate: new Date('2024-01-01'),
-      endDate: new Date('2024-01-8'),
+      endDate: new Date('2024-01-07'),
       rawInput: '[5] Story'
     };
     const result = service.calculateMedianVelocity([sprint]);
@@ -43,13 +43,13 @@ describe('AgileService', () => {
       {
         id: uuidv4(),
         startDate: new Date('2024-01-01'),
-        endDate: new Date('2024-01-08'),
+        endDate: new Date('2024-01-07'),
         rawInput: '[10] Story'
       },
       {
         id: uuidv4(),
         startDate: new Date('2024-01-08'),
-        endDate: new Date('2024-01-15'),
+        endDate: new Date('2024-01-14'),
         rawInput: '[20] Story'
       }
     ];
@@ -58,7 +58,7 @@ describe('AgileService', () => {
   });
 
   it('should return -1 for project completion with empty sprints', () => {
-    const backlog = {id: uuidv4(), name: 'Test Backlog', rawInput: '[5] Story'};
+    const backlog = '[5] Story';
     const result = service.projectBacklogCompletion(backlog, []);
     expect(result).toBe(-1);
   });
@@ -67,10 +67,10 @@ describe('AgileService', () => {
     const sprint: Sprint = {
       id: uuidv4(),
       startDate: new Date('2024-01-01'),
-      endDate: new Date('2024-01-08'),
+      endDate: new Date('2024-01-07'),
       rawInput: '[5] Story'
     };
-    const backlog = {id: uuidv4(), name: 'Test Backlog', rawInput: '[5] Story'};
+    const backlog = '[5] Story';
     const result = service.projectBacklogCompletion(backlog, [sprint]);
     expect(result).toBe(7);
   });
@@ -80,22 +80,61 @@ describe('AgileService', () => {
       {
         id: uuidv4(),
         startDate: new Date('2024-01-01'),
-        endDate: new Date('2024-01-08'),
+        endDate: new Date('2024-01-07'),
         rawInput: '[10] Story'
       },
       {
         id: uuidv4(),
         startDate: new Date('2024-01-08'),
-        endDate: new Date('2024-01-15'),
+        endDate: new Date('2024-01-14'),
         rawInput: '[20] Story'
       }
     ];
-    const backlog = {
-      id: uuidv4(),
-      name: 'Test Backlog',
-      rawInput: '[15] Story 1\n[30] Story 2'
-    };
+    const backlog = '[15] Story 1\n[30] Story 2';
     const result = service.projectBacklogCompletion(backlog, sprints);
     expect(result).toBe(21);
+  });
+
+  it('should use the starting velocity while there are no sprints', () => {
+    expect(service.calculateMedianVelocity([], 6)).toBe(6);
+    expect(service.projectBacklogCompletion('[12] Story', [], 6)).toBe(14);
+  });
+
+  it('should count the starting velocity as one more sprint', () => {
+    const sprint: Sprint = {
+      id: uuidv4(),
+      startDate: new Date('2024-01-01'),
+      endDate: new Date('2024-01-07'),
+      rawInput: '[10] Story'
+    };
+    expect(service.calculateMedianVelocity([sprint], 6)).toBe(8);
+  });
+
+  it('should count a Monday to Sunday sprint as a full week', () => {
+    const sprint: Sprint = {
+      id: uuidv4(),
+      startDate: new Date(2026, 8, 28),
+      endDate: new Date(2026, 9, 4),
+      rawInput: '[3] Story'
+    };
+    expect(service.calculateMedianVelocity([sprint])).toBe(3);
+  });
+
+  it('should scale a two week sprint down to one week', () => {
+    const sprint: Sprint = {
+      id: uuidv4(),
+      startDate: new Date(2026, 8, 21),
+      endDate: new Date(2026, 9, 4),
+      rawInput: '[6] Story'
+    };
+    expect(service.calculateMedianVelocity([sprint])).toBe(3);
+  });
+
+  it('should take a sprint without dates as one week', () => {
+    expect(service.calculateMedianVelocity([{id: uuidv4(), rawInput: '[4] Story'}])).toBe(4);
+  });
+
+  it('should round the projected completion up to whole days', () => {
+    expect(service.projectBacklogCompletion('[4] Story', [], 3)).toBe(10);
   });
 });

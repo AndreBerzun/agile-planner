@@ -14,14 +14,14 @@ export class StoryParserService {
     }
 
     const lines = rawInput.split('\n');
-    const regex = /\[(\d+)\]\s+(.*)/;
+    const regex = /\[(\d+(?:[.,]\d+)?)\]\s+(.*)/;
     const stories: Story[] = [];
 
     for (const line of lines) {
       const match = line.trim().match(regex);
       if (match) {
         stories.push({
-          points: parseInt(match[1], 10),
+          points: parseFloat(match[1].replace(',', '.')),
           title: match[2].trim()
         });
       }

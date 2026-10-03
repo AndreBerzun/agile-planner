@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { StorageService } from '../../../shared/services/storage.service';
+import { StateService } from '../../../shared/services/state.service';
 
 @Component({
   selector: 'app-storage',
@@ -7,25 +8,24 @@ import { StorageService } from '../../../shared/services/storage.service';
   templateUrl: './storage.component.html'
 })
 export class StorageComponent {
-  constructor(private readonly storageService: StorageService) {
+  constructor(private readonly storageService: StorageService, private readonly state: StateService) {
   }
 
   exportData(): void {
-    const dataStr = this.storageService.exportState();
-    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
-
-    const exportFileDefaultName = `agile-planner-backup-${new Date().toISOString().split('T')[0]}.json`;
+    const project = this.state.project;
+    const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(this.storageService.exportProject(project));
+    const slug = project.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'project';
 
     const linkElement = document.createElement('a');
     linkElement.setAttribute('href', dataUri);
-    linkElement.setAttribute('download', exportFileDefaultName);
+    linkElement.setAttribute('download', `agile-planner-${slug}-${new Date().toISOString().split('T')[0]}.json`);
     linkElement.click();
   }
 
-  clearData(): void {
-    if (confirm('Are you sure you want to clear all data? This action cannot be undone.')) {
-      this.storageService.clearState();
-      window.location.reload();
+  deleteProject(): void {
+    const name = this.state.project.name || 'this project';
+    if (confirm(`Are you sure you want to delete ${name}? This action cannot be undone.`)) {
+      this.state.removeActiveProject();
     }
   }
 
@@ -35,22 +35,19 @@ export class StorageComponent {
     input.accept = '.json';
 
     input.onchange = (event: any) => {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.readAsText(file, 'UTF-8');
-
-        reader.onload = (readerEvent) => {
-          try {
-            const content = readerEvent.target?.result as string;
-            this.storageService.importState(content);
-            window.location.reload(); // Reload to reflect changes
-          } catch (error) {
-            console.error('Error importing data:', error);
-            alert('Invalid data format. Could not import.');
-          }
-        };
+      const file: File | undefined = event.target.files[0];
+      if (!file) {
+        return;
       }
+
+      file.text().then(content => {
+        try {
+          this.state.addProject(this.storageService.importProject(content, file.name.replace(/\.json$/i, '')));
+        } catch (error) {
+          console.error('Error importing data:', error);
+          alert('Invalid data format. Could not import.');
+        }
+      });
     };
 
     input.click();

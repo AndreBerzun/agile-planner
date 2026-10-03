@@ -1,0 +1,19 @@
+<h2><span>## PROJECT || ACP-000</span></h2>
+
+<retro-card>
+  <label class="d-flex align-items-center">
+    <b>NAME:</b>
+    <input class="flex-grow-1" placeholder="project_name" [formControl]="state.form.controls.name">
+  </label>
+  <label class="d-flex align-items-center">
+    <b>START_VLCTY:</b>
+    <input
+      class="flex-grow-1"
+      type="number"
+      min="0"
+      step="0.5"
+      placeholder="0"
+      [formControl]="state.form.controls.startingVelocity"
+    >
+  </label>
+</retro-card>

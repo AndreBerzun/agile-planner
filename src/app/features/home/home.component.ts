@@ -1,23 +1,23 @@
 import { Component } from '@angular/core';
-import { BacklogsComponent } from './backlogs/backlogs.component';
 import { SprintsComponent } from './sprints/sprints.component';
 import { StateService } from '../../shared/services/state.service';
-import { ReactiveFormsModule } from '@angular/forms';
-import { StoryAtticComponent } from './story-attic/story-attic.component';
 import { CurrentSprintComponent } from './current-sprint/current-sprint.component';
 import { HeaderComponent } from './header/header.component';
 import { StorageComponent } from './storage/storage.component';
+import { BacklogComponent } from './backlog/backlog.component';
+import { ProjectTabsComponent } from './project-tabs/project-tabs.component';
+import { ProjectSettingsComponent } from './project-settings/project-settings.component';
 
 @Component({
   selector: 'app-home',
   imports: [
-    BacklogsComponent,
+    BacklogComponent,
     SprintsComponent,
-    ReactiveFormsModule,
-    StoryAtticComponent,
     CurrentSprintComponent,
     HeaderComponent,
-    StorageComponent
+    StorageComponent,
+    ProjectTabsComponent,
+    ProjectSettingsComponent
   ],
   templateUrl: './home.component.html',
   standalone: true

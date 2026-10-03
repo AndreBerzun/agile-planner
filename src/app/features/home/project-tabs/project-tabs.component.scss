@@ -1,0 +1,16 @@
+@use 'theme' as theme;
+
+button.retro.tab {
+  color: theme.$teal;
+  text-shadow: 0 0 8px rgba(theme.$teal, 0.75);
+
+  &.active {
+    color: theme.$dark-teal;
+    background-color: theme.$green;
+    text-shadow: none;
+  }
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.3;
+}

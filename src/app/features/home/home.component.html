@@ -1,7 +1,15 @@
 <main>
-  <form [formGroup]="state.form">
+  <section>
+    <app-header></app-header>
+  </section>
+
+  <section>
+    <app-project-tabs></app-project-tabs>
+  </section>
+
+  @for (projectId of [state.activeProjectId]; track projectId) {
     <section>
-      <app-header></app-header>
+      <app-project-settings></app-project-settings>
     </section>
 
     <section>
@@ -9,11 +17,7 @@
     </section>
 
     <section>
-      <app-backlogs></app-backlogs>
-    </section>
-
-    <section>
-      <app-story-attic></app-story-attic>
+      <app-backlog></app-backlog>
     </section>
 
     <section>
@@ -23,12 +27,12 @@
     <section>
       <app-storage></app-storage>
     </section>
+  }
 
-    <section>
-      <p style="text-align: center">
-        PROPRIETARY TECHNOLOGY<br>
-        PROPERTY OF LIANTO ENGINEERING CORP.
-      </p>
-    </section>
-  </form>
+  <section>
+    <p style="text-align: center">
+      PROPRIETARY TECHNOLOGY<br>
+      PROPERTY OF LIANTO ENGINEERING CORP.
+    </p>
+  </section>
 </main>
