@@ -1,13 +1,56 @@
 @use 'theme' as theme;
 
+$padding: 12px;
+$heading-bleed: 0.5rem;
+
+.storyarea {
+  display: grid;
+  font-family: monospace;
+  font-size: 0.8333rem;
+  font-weight: bold;
+  line-height: normal;
+  letter-spacing: normal;
+  text-shadow: none;
+}
+
+.highlights, textarea {
+  grid-area: 1 / 1;
+  margin: 0;
+  padding: $padding;
+  font: inherit;
+  letter-spacing: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.highlights {
+  min-width: 0;
+  min-height: 100px;
+  pointer-events: none;
+}
+
+textarea {
+  height: 100%;
+  color: transparent;
+  caret-color: theme.$amber;
+}
+
 .heading {
-  background-color: theme.$green;
+  background-color: theme.$teal;
+  box-shadow: -$heading-bleed 0 0 theme.$teal, $heading-bleed 0 0 theme.$teal;
   color: theme.$dark-teal;
-  padding: 0 0.5rem;
-  display: block;
   text-transform: uppercase;
 }
 
 .story-points {
   color: white;
+}
+
+.done {
+  opacity: 0.45;
+  text-decoration: line-through;
+
+  .story-points {
+    color: inherit;
+  }
 }

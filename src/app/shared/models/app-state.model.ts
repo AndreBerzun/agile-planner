@@ -35,4 +35,5 @@ export function appStateFromForm(form: FormGroup<AppStateFormModel>): AppState {
 export type Story = {
   title: string;
   points: number;
+  done: boolean;
 }

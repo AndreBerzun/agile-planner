@@ -1,6 +1,12 @@
-<textarea
-  #textArea
-  [formControl]="control"
-  [placeholder]="placeholder"
-  spellcheck="false"
-></textarea>
+<div class="storyarea">
+  <div class="highlights" aria-hidden="true">
+    @for (line of lines(); track $index) {
+      <div class="line" [class.heading]="line.heading" [class.done]="line.done">@for (segment of line.segments; track $index) {<span [class.story-points]="segment.estimate">{{ segment.text }}</span>}</div>
+    }
+  </div>
+  <textarea
+    [formControl]="control"
+    [placeholder]="placeholder"
+    spellcheck="false"
+  ></textarea>
+</div>

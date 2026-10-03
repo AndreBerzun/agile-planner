@@ -137,4 +137,13 @@ describe('AgileService', () => {
   it('should round the projected completion up to whole days', () => {
     expect(service.projectBacklogCompletion('[4] Story', [], 3)).toBe(10);
   });
+
+  it('should leave done stories out of the open backlog points', () => {
+    expect(service.parseOpenStoryPoints('x [5] Done\n[3] Open')).toBe(3);
+    expect(service.projectBacklogCompletion('x [8] Done\n[4] Story', [], 3)).toBe(10);
+  });
+
+  it('should count done stories towards sprint velocity', () => {
+    expect(service.parseStoryPoints('x [5] Done\n[3] Open')).toBe(8);
+  });
 });

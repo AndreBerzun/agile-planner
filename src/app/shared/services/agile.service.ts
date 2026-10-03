@@ -15,7 +15,7 @@ export class AgileService {
     const medianVelocity = this.calculateMedianVelocity(sprints, startingVelocity);
     if (medianVelocity === 0) return -1;
 
-    const storyPoints = this.parseStoryPoints(backlog);
+    const storyPoints = this.parseOpenStoryPoints(backlog);
     return Math.ceil(defaultSprintLength * (storyPoints / medianVelocity));
   }
 
@@ -36,6 +36,13 @@ export class AgileService {
 
   parseStoryPoints(rawInput: string): number {
     return this.storyParser.parseStories(rawInput)
+      .map(story => story.points)
+      .reduce((sum, previousValue) => sum + previousValue, 0);
+  }
+
+  parseOpenStoryPoints(rawInput: string): number {
+    return this.storyParser.parseStories(rawInput)
+      .filter(story => !story.done)
       .map(story => story.points)
       .reduce((sum, previousValue) => sum + previousValue, 0);
   }

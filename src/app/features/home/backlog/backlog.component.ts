@@ -27,7 +27,7 @@ export class BacklogComponent {
 
   readonly storyPoints$: Observable<number> = this.state.form.valueChanges.pipe(
     startWith(null),
-    map(() => this.agile.parseStoryPoints(this.state.project.backlog))
+    map(() => this.agile.parseOpenStoryPoints(this.state.project.backlog))
   );
 
   readonly projectedCompletion$: Observable<number> = this.state.form.valueChanges.pipe(
