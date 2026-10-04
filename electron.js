@@ -12,7 +12,7 @@ function createWindow() {
   // Create window with reasonable defaults
   mainWindow = new BrowserWindow({
     height: height * 0.9,
-    width: Math.min(650, width * 0.8),
+    width: Math.min(950, width * 0.8),
     backgroundColor: '#1a1a1a',
     webPreferences: {
       nodeIntegration: false,
