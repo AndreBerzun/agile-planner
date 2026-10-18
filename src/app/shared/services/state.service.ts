@@ -8,6 +8,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { createSprintForm, Sprint, sprintFromForm } from '../models/sprint.model';
 import { createProjectForm, newProject, Project, ProjectFormModel, projectFromForm } from '../models/project.model';
 import { closingWeek } from './sprint-week';
+import { splitDone } from './story-syntax';
 
 @Injectable({
   providedIn: 'root'
@@ -86,9 +87,11 @@ export class StateService {
   }
 
   finishCurrentSprint(): void {
-    const finishedSprint = {...sprintFromForm(this.form.controls.currentSprint), ...closingWeek(new Date())};
+    const currentSprint = sprintFromForm(this.form.controls.currentSprint);
+    const {done, open} = splitDone(currentSprint.rawInput ?? '');
+    const finishedSprint = {...currentSprint, rawInput: done, ...closingWeek(new Date())};
 
     this.form.controls.sprints.insert(0, createSprintForm(this.fb, finishedSprint));
-    this.form.controls.currentSprint.reset({id: uuidv4()});
+    this.form.controls.currentSprint.reset({id: uuidv4(), rawInput: open});
   }
 }
