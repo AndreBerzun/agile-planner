@@ -1,4 +1,4 @@
-import { toStoryLines } from './story-syntax';
+import { splitDone, toStoryLines } from './story-syntax';
 
 describe('toStoryLines', () => {
   it('should mark lines starting with # as headings', () => {
@@ -62,5 +62,46 @@ describe('toStoryLines', () => {
         ]
       }
     ]);
+  });
+});
+
+describe('splitDone', () => {
+  it('should send done stories to the finished sprint and keep the rest open', () => {
+    expect(splitDone('x [2] Shipped\n[3] Still open\nX [1] Also shipped')).toEqual({
+      done: 'x [2] Shipped\nX [1] Also shipped',
+      open: '[3] Still open'
+    });
+  });
+
+  it('should keep a heading on each side that has stories under it', () => {
+    expect(splitDone('## Login\nx [1] Form\n[2] Reset\n\n## Billing\nx [3] Invoice')).toEqual({
+      done: '## Login\nx [1] Form\n\n## Billing\nx [3] Invoice',
+      open: '## Login\n[2] Reset'
+    });
+  });
+
+  it('should count stories under subheadings towards their parent heading', () => {
+    expect(splitDone('# Phase\n## Login\nx [1] Form\n## Billing\n[3] Invoice')).toEqual({
+      done: '# Phase\n## Login\nx [1] Form',
+      open: '# Phase\n## Billing\n[3] Invoice'
+    });
+  });
+
+  it('should keep notes and empty headings open', () => {
+    expect(splitDone('## Later\n\ncheck pricing\nx [1] Done')).toEqual({
+      done: '## Later\n\nx [1] Done',
+      open: '## Later\n\ncheck pricing'
+    });
+  });
+
+  it('should collapse the blank lines left behind by moved stories', () => {
+    expect(splitDone('[1] a\n\nx [2] b\n\n[3] c\n')).toEqual({
+      done: 'x [2] b',
+      open: '[1] a\n\n[3] c'
+    });
+  });
+
+  it('should leave the finished sprint empty when nothing is done', () => {
+    expect(splitDone('## Login\n[1] Form')).toEqual({done: '', open: '## Login\n[1] Form'});
   });
 });

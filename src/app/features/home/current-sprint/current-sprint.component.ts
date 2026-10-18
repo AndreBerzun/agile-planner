@@ -5,6 +5,7 @@ import { AgileService } from '../../../shared/services/agile.service';
 import { SprintFormModel } from '../../../shared/models/sprint.model';
 import { RetroCardModule } from '../../../shared/ui/retro-card';
 import { StoryareaComponent } from '../../../shared/ui/storyarea/storyarea.component';
+import { splitDone } from '../../../shared/services/story-syntax';
 
 @Component({
   selector: 'app-current-sprint',
@@ -25,8 +26,8 @@ export class CurrentSprintComponent {
   }
 
   completeSprint(): void {
-    if (!this.currentSprintForm.controls.rawInput?.value) {
-      alert('Cannot complete empty sprint');
+    if (!splitDone(this.currentSprintForm.controls.rawInput?.value ?? '').done) {
+      alert('Cannot complete a sprint without done stories');
       return;
     }
 
