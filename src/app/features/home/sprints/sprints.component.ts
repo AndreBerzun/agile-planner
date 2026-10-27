@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { StateService } from '../../../shared/services/state.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CdkDrag, CdkDragDrop, CdkDragHandle, CdkDropList } from '@angular/cdk/drag-drop';
 import { AgileService } from '../../../shared/services/agile.service';
 import { map, Observable, startWith } from 'rxjs';
@@ -9,6 +9,7 @@ import { RetroDatepickerComponent } from '../../../shared/ui/retro-datepicker/re
 import { CalculationPipe } from '../../../shared/pipes';
 import { AsyncPipe } from '@angular/common';
 import { StoryareaComponent } from '../../../shared/ui/storyarea/storyarea.component';
+import { SprintFormModel } from '../../../shared/models/sprint.model';
 
 @Component({
   selector: 'app-sprints',
@@ -36,6 +37,10 @@ export class SprintsComponent {
       map((project) => agile.calculateMedianVelocity(project.sprints, project.startingVelocity)),
       map((median) => Math.floor(median * 100) / 100)
     )
+  }
+
+  sprintPoints(sprint: FormGroup<SprintFormModel>): number {
+    return Math.round(this.agile.parseStoryPoints(sprint.value.rawInput ?? '') * 100) / 100;
   }
 
   onSprintDrop(event: CdkDragDrop<any[]>): void {

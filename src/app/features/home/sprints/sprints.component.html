@@ -26,6 +26,8 @@
               ></retro-datepicker>
             </retro-card-title>
 
+            <b class="px-3 text-nowrap">SP: <span class="white">{{ sprintPoints(sprint) }}</span></b>
+
             <button class="retro danger small" (click)="state.removeSprint(sprint.value.id!)">X</button>
           </retro-card-header>
 
